@@ -1,16 +1,16 @@
 {
-  "name": "storybook-addon-kit",
+  "name": "storybook-carbon-theme",
   "version": "0.0.0",
-  "description": "everything you need to build a Storybook addon",
+  "description": "themes storybook manager and preview with carbon tokens",
   "keywords": [
     "storybook-addon"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/storybookjs/storybook-addon-kit"
+    "url": "https://github.com/devadula-nandan/storybook-theme-carbon-2"
   },
   "license": "MIT",
-  "author": "package-author",
+  "author": "nandan <devadula.nandan@gmail.com>",
   "type": "module",
   "exports": {
     ".": {
@@ -37,7 +37,6 @@
     "build-storybook": "storybook build",
     "build:watch": "npm run build -- --watch",
     "eject-ts": "zx scripts/eject-typescript.js",
-    "postinstall": "node scripts/welcome.js",
     "format": "prettier --write .",
     "lint": "eslint --cache .",
     "lint:fix": "pnpm lint --fix",
@@ -57,9 +56,9 @@
     "@carbon/themes": "^11.68.0",
     "@carbon/type": "^11.54.0",
     "@eslint/js": "^9.36.0",
-    "@storybook/addon-docs": "next",
+    "@storybook/addon-docs": "10.2.10",
     "@storybook/icons": "^2.0.0",
-    "@storybook/react-vite": "next",
+    "@storybook/react-vite": "10.2.10",
     "@types/node": "^20",
     "@types/react": "^18.2.65",
     "@types/react-dom": "^18.2.21",
@@ -71,14 +70,14 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-storybook": "next",
+    "eslint-plugin-storybook": "10.2.10",
     "npm-run-all2": "^8.0.4",
     "prettier": "^3.6.2",
     "prompts": "^2.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.97.3",
-    "storybook": "next",
+    "storybook": "10.2.10",
     "ts-dedent": "^2.2.0",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
@@ -87,7 +86,7 @@
     "zx": "^8.7.1"
   },
   "peerDependencies": {
-    "storybook": "*"
+    "storybook": "10.2.10"
   },
   "publishConfig": {
     "access": "public"
@@ -105,9 +104,9 @@
     ]
   },
   "storybook": {
-    "displayName": "Addon Kit",
+    "displayName": "storybook-carbon-theme",
     "supportedFrameworks": [
-      "supported-frameworks"
+      "web-components", "react"
     ],
     "icon": "https://user-images.githubusercontent.com/321738/63501763-88dbf600-c4cc-11e9-96cd-94adadc2fd72.png"
   },

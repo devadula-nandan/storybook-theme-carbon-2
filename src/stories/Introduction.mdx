@@ -1,198 +1,538 @@
-import { Meta } from '@storybook/addon-docs/blocks';
-import Code from './assets/code-brackets.svg';
-import Colors from './assets/colors.svg';
-import Comments from './assets/comments.svg';
-import Direction from './assets/direction.svg';
-import Flow from './assets/flow.svg';
-import Plugin from './assets/plugin.svg';
-import Repo from './assets/repo.svg';
-import StackAlt from './assets/stackalt.svg';
+import {
+  Meta,
+  Canvas,
+  Story,
+  Unstyled,
+  Title,
+  Subtitle,
+  Description,
+  Primary,
+  Controls,
+  Stories,
+  ArgTypes,
+  Source,
+  ColorPalette,
+  ColorItem,
+  Typeset,
+  IconGallery,
+  IconItem,
+} from "@storybook/addon-docs/blocks";
+import { useState, useEffect } from "react";
+import * as ExampleStories from "./Example.stories";
 
-<Meta title="Example/Introduction" />
+export const RenderCounter = () => {
+  const [count, setCount] = useState(() =>
+    parseInt(localStorage.getItem("render-count") || "0"),
+  );
+  useEffect(() => {
+    const n = count + 1;
+    setCount(n);
+    localStorage.setItem("render-count", String(n));
+  }, []);
+  return (
+    <button
+      onClick={() => {
+        setCount(0);
+        localStorage.setItem("render-count", "0");
+      }}
+      style={{ cursor: "pointer" }}
+    >
+      Renders: {count} - Reset
+    </button>
+  );
+};
 
-<style>
-  {`
-    .subheading {
-      --mediumdark: '#999999';
-      font-weight: 700;
-      font-size: 13px;
-      color: #999;
-      letter-spacing: 6px;
-      line-height: 24px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      margin-top: 40px;
-    }
+<Meta of={ExampleStories} />
 
-    .link-list {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: 1fr 1fr;
-      row-gap: 10px;
-    }
+<Title>Comprehensive Storybook MDX Documentation</Title>
 
-    @media (min-width: 620px) {
-      .link-list {
-        row-gap: 20px;
-        column-gap: 20px;
-        grid-template-columns: 1fr 1fr;
-      }
-    }
+<Subtitle>
+  A complete reference for Markdown syntax and Storybook Doc Blocks
+</Subtitle>
 
-    @media all and (-ms-high-contrast:none) {
-    .link-list {
-        display: -ms-grid;
-        -ms-grid-columns: 1fr 1fr;
-        -ms-grid-rows: 1fr 1fr;
-      }
-    }
+<Description>
+  This document demonstrates all Markdown syntax that works safely in Storybook
+  MDX v2, plus comprehensive examples of Storybook-specific Doc Blocks for
+  creating rich documentation.
+</Description>
 
-    .link-item {
-      display: block;
-      padding: 20px 30px 20px 15px;
-      border: 1px solid #00000010;
-      border-radius: 5px;
-      transition: background 150ms ease-out, border 150ms ease-out, transform 150ms ease-out;
-      color: #333333;
-      display: flex;
-      align-items: flex-start;
-    }
+---
 
-    .link-item:hover {
-      border-color: #1EA7FD50;
-      transform: translate3d(0, -3px, 0);
-      box-shadow: rgba(0, 0, 0, 0.08) 0 3px 10px 0;
-    }
+## Headers
 
-    .link-item:active {
-      border-color: #1EA7FD;
-      transform: translate3d(0, 0, 0);
-    }
+# H1 Header
 
-    .link-item strong {
-      font-weight: 700;
-      display: block;
-      margin-bottom: 2px;
-    }
+## H2 Header
 
-    .link-item img {
-      height: 40px;
-      width: 40px;
-      margin-right: 15px;
-      flex: none;
-    }
+### H3 Header
 
-    .link-item span {
-      font-size: 14px;
-      line-height: 20px;
-    }
+#### H4 Header
 
-    .tip {
-      display: inline-block;
-      border-radius: 1em;
-      font-size: 11px;
-      line-height: 12px;
-      font-weight: 700;
-      background: #E7FDD8;
-      color: #66BF3C;
-      padding: 4px 12px;
-      margin-right: 10px;
-      vertical-align: top;
-    }
+##### H5 Header
 
-    .tip-wrapper {
-      font-size: 13px;
-      line-height: 20px;
-      margin-top: 40px;
-      margin-bottom: 40px;
-    }
+###### H6 Header
 
-    .tip-wrapper code {
-      font-size: 12px;
-      display: inline-block;
-    }
+---
+
+## Emphasis
+
+_Italic text_
+
+**Bold text**
+
+**_Bold and italic_**
+
+---
+
+## Lists
+
+### Unordered
+
+- Item 1
+- Item 2
+  - Nested item
+  - Another nested
+- Item 3
+
+### Ordered
+
+1. First
+2. Second
+   1. Nested
+   2. Nested
+3. Third
+
+---
+
+## Links
+
+[Inline link](https://example.com)
+
+Direct URL:
+https://example.com
+
+Email link using HTML:
+
+<a href="mailto:sales@example.com">Contact Sales</a>
+
+Relative link:
+[Go to Headers](#headers)
+
+---
+
+## Images
+
+![Placeholder](https://placehold.co/200)
+
+Image with link:
+
+<a href="https://example.com">
+  <img src="https://placehold.co/200" alt="Example" />
+</a>
+
+---
+
+## Table
+<table style={{width: '100%'}}>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Name one</code></td>
+      <td>Description 1 Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
+    </tr>
+    <tr>
+      <td><code>Name two</code></td>
+      <td>Description 2 Lorem Ipsum is simply dummy text of the printing and typesetting industry.</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Code
+
+Inline code example: `const x = 1`
+
+### JavaScript
+
+```javascript
+function hello() {
+  console.log("Hello, Storybook!");
+}
+```
+
+### TypeScript
+
+```typescript
+interface User {
+  name: string;
+  age: number;
+}
+```
+
+### HTML
+
+```html
+<div>Hello World</div>
+```
+
+### CSS
+
+```css
+.container {
+  display: flex;
+}
+```
+
+### React Component
+
+<Source
+  code={`
+  import React from 'react';
+  import { Button } from '@carbon/react';
+
+  export const MyComponent = ({ label, onClick }) => {
+    return (
+      <Button onClick={onClick}>
+        {label}
+      </Button>
+    );
+  };
   `}
-</style>
+  language="tsx"
+/>
 
-# Welcome to Storybook
+### CSS with Carbon Tokens
 
-Storybook helps you build UI components in isolation from your app's business logic, data, and context.
-That makes it easy to develop hard-to-reach states. Save these UI states as **stories** to revisit during development, testing, or QA.
+<Source
+  code={`
+  .my-component {
+    background-color: theme.$background;
+    color: var(--cds-text-primary);
+    padding: var(--cds-spacing-05);
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
 
-Browse example stories now by navigating to them in the sidebar.
-View their code in the `stories` directory to learn how they work.
-We recommend building UIs with a [**component-driven**](https://componentdriven.org) process starting with atomic components and ending with pages.
+  .my-component:hover {
+    background-color: theme.$background-hover;
+  }
+  `}
+  language="css"
+/>
 
-<div className="subheading">Configure</div>
+### JSON Configuration
 
-<div className="link-list">
-  <a className="link-item" href="https://storybook.js.org/docs/react/addons/addon-types" target="_blank">
-    <img src={Plugin} alt="plugin" />
-    <span>
-      <strong>Presets for popular tools</strong>
-      Easy setup for TypeScript, SCSS and more.
-    </span>
-  </a>
-  <a className="link-item" href="https://storybook.js.org/docs/react/configure/webpack" target="_blank">
-    <img src={StackAlt} alt="Build" />
-    <span>
-      <strong>Build configuration</strong>
-      How to customize webpack and Babel
-    </span>
-  </a>
-  <a className="link-item" href="https://storybook.js.org/docs/react/configure/styling-and-css" target="_blank">
-    <img src={Colors} alt="colors" />
-    <span>
-      <strong>Styling</strong>
-      How to load and configure CSS libraries
-    </span>
-  </a>
-  <a
-    className="link-item"
-    href="https://storybook.js.org/docs/react/get-started/setup#configure-storybook-for-your-stack"
-    target="_blank"
+<Source
+  code={`
+  {
+    "name": "storybook-theme-carbon",
+    "version": "1.0.0",
+    "description": "Carbon Design System theme for Storybook",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts"
+  }
+  `}
+  language="json"
+/>
+
+---
+
+## Blockquotes
+
+> This is a blockquote.
+>
+> - It can contain lists
+> - **Bold text**
+> - `Code`
+
+---
+
+## Horizontal Rule
+
+---
+
+## Line Breaks
+
+Line one
+Line two
+
+Line one<br />
+Line two
+
+---
+
+## Inline HTML
+
+<div style={{ color: "blue", fontWeight: "bold" }}>
+  This is styled HTML inside MDX
+</div>
+
+<details>
+  <summary>Section 1 title</summary>
+
+Hidden content works in MDX.
+
+- It supports Markdown
+- And formatting
+
+</details>
+<details>
+  <summary>Section 2 title</summary>
+
+Hidden content works in MDX.
+
+- It supports Markdown
+- And formatting
+
+</details>
+<details>
+  <summary>Section 3 title</summary>
+
+Hidden content works in MDX.
+
+- It supports Markdown
+- And formatting
+
+</details>
+
+---
+
+## Superscript & Subscript (HTML only)
+
+H<sub>2</sub>O
+
+E = mc<sup>2</sup>
+
+---
+
+## Emoji
+
+😀 🎉 🚀 ❤️ 👍
+
+---
+
+## JSX Expressions
+
+2 + 2 = {2 + 2}
+
+Current year: {new Date().getFullYear()}
+
+---
+
+## Styled JSX Block
+
+<div
+  style={{
+    backgroundColor: "var(--cds-layer)",
+    color: "var(--cds-text-primary)",
+    padding: "16px",
+  }}
+>
+  This is a styled JSX container.
+</div>
+
+---
+
+## Unstyled
+
+<Unstyled>
+  <div
+    style={{
+      backgroundColor: "var(--cds-layer)",
+      color: "var(--cds-text-primary)",
+      padding: "16px",
+    }}
   >
-    <img src={Flow} alt="flow" />
-    <span>
-      <strong>Data</strong>
-      Providers and mocking for data libraries
-    </span>
-  </a>
-</div>
+    <ul>
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </ul>
+  </div>
+</Unstyled>
 
-<div className="subheading">Learn</div>
+---
 
-<div className="link-list">
-  <a className="link-item" href="https://storybook.js.org/docs" target="_blank">
-    <img src={Repo} alt="repo" />
-    <span>
-      <strong>Storybook documentation</strong>
-      Configure, customize, and extend
-    </span>
-  </a>
-  <a className="link-item" href="https://storybook.js.org/tutorials/" target="_blank">
-    <img src={Direction} alt="direction" />
-    <span>
-      <strong>In-depth guides</strong>
-      Best practices from leading teams
-    </span>
-  </a>
-  <a className="link-item" href="https://github.com/storybookjs/storybook" target="_blank">
-    <img src={Code} alt="code" />
-    <span>
-      <strong>GitHub project</strong>
-      View the source and add issues
-    </span>
-  </a>
-  <a className="link-item" href="https://discord.gg/storybook" target="_blank">
-    <img src={Comments} alt="comments" />
-    <span>
-      <strong>Discord chat</strong>
-      Chat with maintainers and the community
-    </span>
-  </a>
-</div>
+## Complex Combination Example
 
-<div className="tip-wrapper">
-  <span className="tip">Tip</span>Edit the Markdown in <code>stories/Introduction.stories.mdx</code>
+> ### Combined Example
+>
+> - **Bold**
+> - _Italic_
+> - `Code`
+>
+> ```javascript
+> console.log("Nested code block");
+> ```
+
+---
+
+<RenderCounter />
+
+---
+
+## Storybook Doc Blocks
+
+### Canvas Component
+
+The Canvas component displays stories in an isolated preview with controls.
+
+<Canvas of={ExampleStories.RenderCounterStory} />
+
+### Multiple Stories in Canvas
+
+<Canvas>
+  <Story of={ExampleStories.ColorToken} />
+  <Story of={ExampleStories.DummyControls} />
+</Canvas>
+
+---
+
+### Primary Story
+
+The Primary block shows the first story with controls:
+
+<Primary />
+
+---
+
+### Controls Table
+
+The Controls block displays all the args for a story:
+
+<Controls of={ExampleStories.DummyControls} />
+
+---
+
+### ArgTypes Table
+
+Display argument types documentation:
+
+<ArgTypes of={ExampleStories.DummyControls} />
+
+---
+
+### Color Palette
+
+Display color swatches for design systems:
+
+<ColorPalette>
+  <ColorItem
+    title="Primary Colors"
+    subtitle="Main brand colors"
+    colors={{
+      Blue: "#0f62fe",
+      "Blue Hover": "#0353e9",
+      "Blue Active": "#002d9c",
+    }}
+  />
+  <ColorItem
+    title="Secondary Colors"
+    subtitle="Supporting colors"
+    colors={{
+      Gray: "#525252",
+      "Gray Hover": "#393939",
+      "Gray Active": "#161616",
+    }}
+  />
+  <ColorItem
+    title="Status Colors"
+    subtitle="Feedback colors"
+    colors={{
+      Success: "#24a148",
+      Warning: "#f1c21b",
+      Error: "#da1e28",
+      Info: "#0043ce",
+    }}
+  />
+</ColorPalette>
+
+---
+
+### Typography Scale
+
+Display typography specimens:
+
+<Typeset
+  fontSizes={[12, 14, 16, 20, 24, 32, 40, 48]}
+  fontWeight={400}
+  sampleText="The quick brown fox jumps over the lazy dog"
+  fontFamily="IBM Plex Sans, sans-serif"
+/>
+
+<Typeset
+  fontSizes={[16, 20, 24, 32]}
+  fontWeight={600}
+  sampleText="Bold Typography Example"
+  fontFamily="IBM Plex Sans, sans-serif"
+/>
+
+---
+
+### Icon Gallery
+
+Display icon collections:
+
+<IconGallery>
+  <IconItem name="Add">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+      <path d="M17 15V8h-2v7H8v2h7v7h2v-7h7v-2z" />
+    </svg>
+  </IconItem>
+  <IconItem name="Close">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+      <path d="M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4l6.6 6.6L8 22.6 9.4 24l6.6-6.6 6.6 6.6 1.4-1.4-6.6-6.6L24 9.4z" />
+    </svg>
+  </IconItem>
+  <IconItem name="Check">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+      <path d="M13 24l-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9 13 24z" />
+    </svg>
+  </IconItem>
+  <IconItem name="Search">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+      <path d="M29 27.586l-7.552-7.552a11.018 11.018 0 1 0-1.414 1.414L27.586 29zM4 13a9 9 0 1 1 9 9 9.01 9.01 0 0 1-9-9z" />
+    </svg>
+  </IconItem>
+  <IconItem name="Settings">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+      <path d="M27 16.76v-1.53l1.92-1.68A2 2 0 0 0 29.3 11l-2.36-4a2 2 0 0 0-1.73-1 2 2 0 0 0-.64.1l-2.43.82a11.35 11.35 0 0 0-1.31-.75l-.51-2.52a2 2 0 0 0-2-1.61h-4.68a2 2 0 0 0-2 1.61l-.51 2.52a11.48 11.48 0 0 0-1.32.75l-2.38-.86A2 2 0 0 0 6.79 6a2 2 0 0 0-1.73 1L2.7 11a2 2 0 0 0 .41 2.51L5 15.24v1.53l-1.89 1.68A2 2 0 0 0 2.7 21l2.36 4a2 2 0 0 0 1.73 1 2 2 0 0 0 .64-.1l2.43-.82a11.35 11.35 0 0 0 1.31.75l.51 2.52a2 2 0 0 0 2 1.61h4.72a2 2 0 0 0 2-1.61l.51-2.52a11.48 11.48 0 0 0 1.32-.75l2.42.82a2 2 0 0 0 .64.1 2 2 0 0 0 1.73-1l2.28-4a2 2 0 0 0-.41-2.51zM25.21 24l-3.43-1.16a8.86 8.86 0 0 1-2.71 1.57L18.36 28h-4.72l-.71-3.55a9.36 9.36 0 0 1-2.7-1.57L6.79 24l-2.36-4 2.72-2.4a8.9 8.9 0 0 1 0-3.13L4.43 12l2.36-4 3.43 1.16a8.86 8.86 0 0 1 2.71-1.57L13.64 4h4.72l.71 3.55a9.36 9.36 0 0 1 2.7 1.57L25.21 8l2.36 4-2.72 2.4a8.9 8.9 0 0 1 0 3.13L27.57 20z" />
+      <path d="M16 22a6 6 0 1 1 6-6 5.94 5.94 0 0 1-6 6zm0-10a3.91 3.91 0 0 0-4 4 3.91 3.91 0 0 0 4 4 3.91 3.91 0 0 0 4-4 3.91 3.91 0 0 0-4-4z" />
+    </svg>
+  </IconItem>
+  <IconItem name="Download">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+      <path d="M26 24v4H6v-4H4v4a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2v-4z" />
+      <path d="M26 14l-1.41-1.41L17 20.17V2h-2v18.17l-7.59-7.58L6 14l10 10 10-10z" />
+    </svg>
+  </IconItem>
+</IconGallery>
+
+---
+
+### All Stories
+
+Display all stories from this file:
+
+<Stories />
+
+---
+
+<div
+  style={{
+    paddingInline: "1rem",
+    display: "flex",
+    backgroundColor: "var(--cds-layer-accent-01)",
+    borderLeft: "4px solid var(--cds-border-interactive)",
+    marginTop: "40px",
+  }}
+>
+  This page demonstrates all major Markdown features and Storybook Doc Blocks.
+  Use this as a reference when creating your own documentation pages.
 </div>

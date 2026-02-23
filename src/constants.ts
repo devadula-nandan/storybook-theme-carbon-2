@@ -1,6 +1,8 @@
 export const ADDON_ID = 'storybook-carbon-theme';
 export const TOOL_ID = `${ADDON_ID}/tool`;
+export const TOGGLE_TOOL_ID = `${ADDON_ID}/toggle-tool`;
 export const THEME_KEY = 'carbonTheme';
+export const CARBONIZE_KEY = 'carbonizeStorybook';
 
 export const CARBON_THEMES = {
   WHITE: 'white',

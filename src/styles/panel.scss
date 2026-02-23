@@ -3,5 +3,13 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/styles/scss/components/button/tokens' as button-tokens;
 @use 'mixins';
-@use 'panel-shared';
 
+[data-carbonize] {
+  aside[aria-labelledby='storybook-panel-heading'] {
+    #storybook-panel-root {
+      * {
+        background-color: red;
+      }
+    }
+  }
+}

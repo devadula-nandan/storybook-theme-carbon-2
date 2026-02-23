@@ -17,11 +17,12 @@
  */
 
 /**
- * Default Theme
- * Applied when no theme attribute is present
- */
+   * Default Theme
+   * Applied when no theme attribute is present
+   */
 :root {
   @include theme.theme(themes.$white);
+  background-color: theme.$background;
 
   /**
    * IBM Plex Fonts - Applied when carbonized
@@ -44,33 +45,33 @@
 }
 
 /**
- * White Theme (Light)
- * IBM Design Language: White background
- */
+   * White Theme (Light)
+   * IBM Design Language: White background
+   */
 :root[storybook-carbon-theme='white'] {
   @include theme.theme(themes.$white);
 }
 
 /**
- * Gray 10 Theme (Light)
- * IBM Design Language: Light gray background
- */
+   * Gray 10 Theme (Light)
+   * IBM Design Language: Light gray background
+   */
 :root[storybook-carbon-theme='g10'] {
   @include theme.theme(themes.$g10);
 }
 
 /**
- * Gray 90 Theme (Dark)
- * IBM Design Language: Dark gray background
- */
+   * Gray 90 Theme (Dark)
+   * IBM Design Language: Dark gray background
+   */
 :root[storybook-carbon-theme='g90'] {
   @include theme.theme(themes.$g90);
 }
 
 /**
- * Gray 100 Theme (Dark)
- * IBM Design Language: Black background
- */
+   * Gray 100 Theme (Dark)
+   * IBM Design Language: Black background
+   */
 :root[storybook-carbon-theme='g100'] {
   @include theme.theme(themes.$g100);
 }
