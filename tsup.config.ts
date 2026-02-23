@@ -1,4 +1,5 @@
 import { defineConfig, type Options } from 'tsup';
+import { sassPlugin } from 'esbuild-sass-plugin';
 
 const NODE_TARGET = 'node20.19'; // Minimum Node version supported by Storybook 10
 
@@ -32,6 +33,11 @@ export default defineConfig(async () => {
      Meaning they shouldn't be bundled with the addon, and they shouldn't be regular dependencies either
     */
     external: ['react', 'react-dom', '@storybook/icons'],
+    esbuildPlugins: [
+      sassPlugin({
+        type: 'style',
+      }),
+    ],
   };
 
   const configs: Options[] = [];

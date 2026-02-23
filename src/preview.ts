@@ -3,6 +3,7 @@ import { useEffect, useGlobals } from 'storybook/preview-api';
 import type { DecoratorFunction } from 'storybook/internal/types';
 
 import { THEME_KEY, CARBON_THEMES } from './constants';
+import './styles/preview.scss';
 
 /**
  * Decorator that syncs the Carbon theme to the preview iframe's HTML element
