@@ -1,34 +1,58 @@
 import React, { memo, useCallback, useEffect } from 'react';
-import { useGlobals, type API } from 'storybook/manager-api';
-import { IconButton } from 'storybook/internal/components';
-import { ADDON_ID, KEY, TOOL_ID } from '../constants';
-import { LightningIcon } from '@storybook/icons';
+import { useGlobals } from 'storybook/manager-api';
+import { IconButton, WithTooltip, TooltipLinkList } from 'storybook/internal/components';
+import { PaintBrushIcon } from '@storybook/icons';
+import { ADDON_ID, THEME_KEY, CARBON_THEMES, type CarbonTheme } from '../constants';
 
-export const Tool = memo(function MyAddonSelector({ api }: { api: API }) {
-  const [globals, updateGlobals, storyGlobals] = useGlobals();
+const THEME_LABELS: Record<CarbonTheme, string> = {
+  [CARBON_THEMES.WHITE]: 'White',
+  [CARBON_THEMES.G10]: 'Gray 10',
+  [CARBON_THEMES.G90]: 'Gray 90',
+  [CARBON_THEMES.G100]: 'Gray 100',
+};
 
-  const isLocked = KEY in storyGlobals;
-  const isActive = !!globals[KEY];
+export const Tool = memo(function CarbonThemeSwitcher() {
+  const [globals, updateGlobals] = useGlobals();
+  const currentTheme = (globals[THEME_KEY] as CarbonTheme) || CARBON_THEMES.WHITE;
 
-  const toggle = useCallback(() => {
-    updateGlobals({
-      [KEY]: !isActive,
-    });
-  }, [isActive]);
+  const setTheme = useCallback(
+    (theme: CarbonTheme) => {
+      updateGlobals({
+        [THEME_KEY]: theme,
+      });
 
+      // Update the theme attribute on both manager and preview HTML elements
+      const managerRoot = document.documentElement;
+      const previewIframe = document.querySelector('#storybook-preview-iframe') as HTMLIFrameElement;
+
+      if (managerRoot) {
+        managerRoot.setAttribute('storybook-carbon-theme', theme);
+      }
+
+      if (previewIframe?.contentDocument?.documentElement) {
+        previewIframe.contentDocument.documentElement.setAttribute('storybook-carbon-theme', theme);
+      }
+    },
+    [updateGlobals],
+  );
+
+  // Set initial theme on mount
   useEffect(() => {
-    api.setAddonShortcut(ADDON_ID, {
-      label: 'Toggle Measure [O]',
-      defaultShortcut: ['O'],
-      actionName: 'outline',
-      showInMenu: false,
-      action: toggle,
-    });
-  }, [toggle, api]);
+    setTheme(currentTheme);
+  }, []);
+
+  const themeOptions = Object.values(CARBON_THEMES).map((theme) => ({
+    id: theme,
+    title: THEME_LABELS[theme],
+    active: currentTheme === theme,
+    onClick: () => setTheme(theme),
+  }));
 
   return (
-    <IconButton key={TOOL_ID} active={isActive} disabled={isLocked} title="Enable my addon" onClick={toggle}>
-      <LightningIcon />
-    </IconButton>
+    <WithTooltip placement="top" trigger="click" closeOnOutsideClick tooltip={<TooltipLinkList links={themeOptions} />}>
+      <IconButton key={ADDON_ID} title="Change Carbon theme">
+        <PaintBrushIcon />
+      </IconButton>
+    </WithTooltip>
   );
 });
